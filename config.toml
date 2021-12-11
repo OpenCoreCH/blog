@@ -49,4 +49,24 @@ paginate = 5
   # see https://developer.twitter.com/en/docs/tweets/optimize-with-cards/guides/getting-started#card-and-content-attribution
   # do not include @
   creator = "romanboehr"
-  site = "https://opencore.ch"
+  site = ""
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    title = "OpenCore Blog"
+    subtitle = ""
+    owner = "Roman Böhringer"
+    keywords = ""
+    copyright = ""
+    menuMore = "Show more"
+    readMore = "Read more"
+    readOtherPosts = "Read other posts"
+    newerPosts = "Newer posts"
+    olderPosts = "Older posts"
+    missingContentMessage = "Page not found..."
+    missingBackButtonLabel = "Back to home page"
+
+    [languages.en.params.logo]
+      logoText = "OpenCore GmbH"
+      logoHomeLink = "/"
