@@ -1,0 +1,167 @@
+<!doctype html><html lang=en>
+<head>
+<title>Setting up Metricbeat on a Docker Swarm Cluster :: OpenCore Blog</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta name=description content="To monitor your Docker swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, /sys/fs/cgroup, /proc, and /var/run/docker.sock inside the container to do so. An example compose file for the sidecar looks like this:
+version: &amp;#39;3.7&amp;#39; services: metricbeat: image: docker.elastic.co/beats/metricbeat:7.16.1 user: root hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34; configs: - source: metricbeat-config target: /usr/share/metricbeat/metricbeat.yml command: - -e - --strict.perms=false - --system.hostfs=/hostfs volumes: - type: bind source: / target: /hostfs read_only: true - type: bind source: /sys/fs/cgroup target: /hostfs/sys/fs/cgroup read_only: true - type: bind source: /proc target: /hostfs/proc read_only: true - type: bind source: /var/run/docker.">
+<meta name=keywords content="docker,docker-swarm,elastic,metricbeat">
+<meta name=robots content="noodp">
+<link rel=canonical href=https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/>
+<link rel=stylesheet href=https://blog.opencore.ch/assets/style.css>
+<link rel=stylesheet href=https://blog.opencore.ch/assets/blue.css>
+<link rel=apple-touch-icon-precomposed sizes=144x144 href=https://blog.opencore.ch/img/apple-touch-icon-144-precomposed.png>
+<link rel="shortcut icon" href=https://blog.opencore.ch/img/favicon/blue.png>
+<meta name=twitter:card content="summary">
+<meta name=twitter:site content>
+<meta name=twitter:creator content="romanboehr">
+<meta property="og:locale" content="en">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Setting up Metricbeat on a Docker Swarm Cluster :: OpenCore Blog">
+<meta property="og:description" content="To monitor your Docker swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, /sys/fs/cgroup, /proc, and /var/run/docker.sock inside the container to do so. An example compose file for the sidecar looks like this:
+version: &amp;#39;3.7&amp;#39; services: metricbeat: image: docker.elastic.co/beats/metricbeat:7.16.1 user: root hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34; configs: - source: metricbeat-config target: /usr/share/metricbeat/metricbeat.yml command: - -e - --strict.perms=false - --system.hostfs=/hostfs volumes: - type: bind source: / target: /hostfs read_only: true - type: bind source: /sys/fs/cgroup target: /hostfs/sys/fs/cgroup read_only: true - type: bind source: /proc target: /hostfs/proc read_only: true - type: bind source: /var/run/docker.">
+<meta property="og:url" content="https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/">
+<meta property="og:site_name" content="Setting up Metricbeat on a Docker Swarm Cluster">
+<meta property="og:image" content="https://blog.opencore.ch">
+<meta property="og:image:width" content="2048">
+<meta property="og:image:height" content="1024">
+<meta property="article:published_time" content="2021-12-25 00:00:00 +0000 UTC">
+</head>
+<body class=blue>
+<div class="container headings--one-size">
+<header class=header>
+<div class=header__inner>
+<div class=header__logo>
+<a href=/>
+<div class=logo>
+OpenCore GmbH
+</div>
+</a>
+</div>
+<div class=menu-trigger>menu</div>
+</div>
+</header>
+<div class=content>
+<div class=post>
+<h1 class=post-title>
+<a href=https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/>Setting up Metricbeat on a Docker Swarm Cluster</a></h1>
+<div class=post-meta>
+<span class=post-date>
+2021-12-25
+</span>
+<span class=post-author>:: Roman Böhringer</span>
+</div>
+<span class=post-tags>
+#<a href=https://blog.opencore.ch/tags/devops/>devops</a>&nbsp;
+</span>
+<div class=post-content><div>
+<p>To monitor your Docker swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&rsquo;s filesystem, <code>/sys/fs/cgroup</code>, <code>/proc</code>, and <code>/var/run/docker.sock</code> inside the container to do so. An example compose file for the sidecar looks like this:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>version</span>: <span style=color:#e6db74>&#39;3.7&#39;</span>
+
+<span style=color:#f92672>services</span>:
+  <span style=color:#f92672>metricbeat</span>:
+    <span style=color:#f92672>image</span>: <span style=color:#ae81ff>docker.elastic.co/beats/metricbeat:7.16.1</span>
+    <span style=color:#f92672>user</span>: <span style=color:#ae81ff>root</span>
+    <span style=color:#f92672>hostname</span>: <span style=color:#e6db74>&#34;{{.Node.Hostname}}-{{.Service.Name}}&#34;</span>
+    <span style=color:#f92672>configs</span>:
+      - <span style=color:#f92672>source</span>: <span style=color:#ae81ff>metricbeat-config</span>
+        <span style=color:#f92672>target</span>: <span style=color:#ae81ff>/usr/share/metricbeat/metricbeat.yml</span>
+    <span style=color:#f92672>command</span>:
+      - -<span style=color:#ae81ff>e</span>
+      - --<span style=color:#ae81ff>strict.perms=false</span>
+      - --<span style=color:#ae81ff>system.hostfs=/hostfs</span>
+    <span style=color:#f92672>volumes</span>:
+      - <span style=color:#f92672>type</span>: <span style=color:#ae81ff>bind</span>
+        <span style=color:#f92672>source</span>: <span style=color:#ae81ff>/</span>
+        <span style=color:#f92672>target</span>: <span style=color:#ae81ff>/hostfs</span>
+        <span style=color:#f92672>read_only</span>: <span style=color:#66d9ef>true</span>
+      - <span style=color:#f92672>type</span>: <span style=color:#ae81ff>bind</span>
+        <span style=color:#f92672>source</span>: <span style=color:#ae81ff>/sys/fs/cgroup</span>
+        <span style=color:#f92672>target</span>: <span style=color:#ae81ff>/hostfs/sys/fs/cgroup</span>
+        <span style=color:#f92672>read_only</span>: <span style=color:#66d9ef>true</span>
+      - <span style=color:#f92672>type</span>: <span style=color:#ae81ff>bind</span>
+        <span style=color:#f92672>source</span>: <span style=color:#ae81ff>/proc</span>
+        <span style=color:#f92672>target</span>: <span style=color:#ae81ff>/hostfs/proc</span>
+        <span style=color:#f92672>read_only</span>: <span style=color:#66d9ef>true</span>
+      - <span style=color:#f92672>type</span>: <span style=color:#ae81ff>bind</span>
+        <span style=color:#f92672>source</span>: <span style=color:#ae81ff>/var/run/docker.sock</span>
+        <span style=color:#f92672>target</span>: <span style=color:#ae81ff>/var/run/docker.sock</span>
+        <span style=color:#f92672>read_only</span>: <span style=color:#66d9ef>true</span>
+    <span style=color:#f92672>deploy</span>:
+      <span style=color:#f92672>mode</span>: <span style=color:#ae81ff>global</span>
+
+<span style=color:#f92672>configs</span>:
+  <span style=color:#f92672>metricbeat-config</span>:
+    <span style=color:#f92672>file</span>: <span style=color:#ae81ff>./metricbeat.yml</span>
+</code></pre></div><p>The <code>hostname</code> ensures that the sidecar reports metrics with the hostname of the Swarm host (and the service name) such that you can distinguish the reported metrics easily.
+An example <code>metricbeat.yml</code> for monitoring the Swarm nodes is provided below:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e>## Metricbeat configuration</span>
+<span style=color:#75715e>## https://github.com/elastic/beats/blob/master/deploy/docker/metricbeat.docker.yml</span>
+<span style=color:#75715e>#</span>
+
+<span style=color:#f92672>metricbeat.config</span>:
+  <span style=color:#f92672>modules</span>:
+    <span style=color:#f92672>path</span>: <span style=color:#ae81ff>${path.config}/modules.d/*.yml</span>
+    <span style=color:#75715e># Reload module configs as they change:</span>
+    <span style=color:#f92672>reload.enabled</span>: <span style=color:#66d9ef>false</span>
+
+<span style=color:#f92672>metricbeat.autodiscover</span>:
+  <span style=color:#f92672>providers</span>:
+    - <span style=color:#f92672>type</span>: <span style=color:#ae81ff>docker</span>
+      <span style=color:#f92672>hints.enabled</span>: <span style=color:#66d9ef>true</span>
+
+<span style=color:#f92672>metricbeat.modules</span>:
+- <span style=color:#f92672>module</span>: <span style=color:#ae81ff>docker</span>
+  <span style=color:#f92672>metricsets</span>:
+    - <span style=color:#ae81ff>container</span>
+    - <span style=color:#ae81ff>cpu</span>
+    - <span style=color:#ae81ff>diskio</span>
+    - <span style=color:#ae81ff>healthcheck</span>
+    - <span style=color:#ae81ff>info</span>
+    - <span style=color:#ae81ff>memory</span>
+    - <span style=color:#ae81ff>network</span>
+  <span style=color:#f92672>hosts</span>: [<span style=color:#e6db74>&#39;unix:///var/run/docker.sock&#39;</span>]
+  <span style=color:#f92672>period</span>: <span style=color:#ae81ff>10s</span>
+  <span style=color:#f92672>enabled</span>: <span style=color:#66d9ef>true</span>
+
+
+<span style=color:#f92672>processors</span>:
+  - <span style=color:#f92672>add_cloud_metadata</span>: <span style=color:#ae81ff>~</span>
+
+<span style=color:#f92672>output.elasticsearch</span>:
+  <span style=color:#f92672>hosts</span>: [<span style=color:#e6db74>&#34;elastic-01:9200&#34;</span>]
+  <span style=color:#ae81ff>...</span>
+</code></pre></div><p>You can of course manually configure other modules in the file to monitor other services in your cluster. Thanks to the enabled <code>autodiscover</code> feature, this can also be done more easily by setting labels on the services you want to monitor, e.g. for Redis:</p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>    <span style=color:#f92672>labels</span>:
+      <span style=color:#f92672>co.elastic.metrics/module</span>: <span style=color:#e6db74>&#34;redis&#34;</span>
+      <span style=color:#f92672>co.elastic.metrics/hosts</span>: <span style=color:#e6db74>&#34;redis1:6379&#34;</span>
+</code></pre></div>
+</div></div>
+<div class=pagination>
+<div class=pagination__title>
+<span class=pagination__title-h>Read other posts</span>
+<hr>
+</div>
+<div class=pagination__buttons>
+<span class="button next">
+<a href=https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/>
+<span class=button__text>How to perform zero-copy S3 uploads with the AWS C++ SDK</span>
+<span class=button__icon>→</span>
+</a>
+</span>
+</div>
+</div>
+</div>
+</div>
+<footer class=footer>
+<div class=footer__inner>
+<div class=copyright>
+<span>© 2021 <a href=https://twitter.com/romanboehr/ target=_blank>Roman Böhringer</a></span>
+</div>
+</div>
+</footer>
+<script src=https://blog.opencore.ch/assets/main.js></script>
+<script src=https://blog.opencore.ch/assets/prism.js></script>
+</div>
+</body>
+</html>

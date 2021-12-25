@@ -44,6 +44,27 @@ OpenCore GmbH
 <div class=posts>
 <div class="post on-list">
 <h1 class=post-title>
+<a href=https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/>Setting up Metricbeat on a Docker Swarm Cluster</a>
+</h1>
+<div class=post-meta>
+<span class=post-date>
+2021-12-25
+</span>
+<span class=post-author>:: Roman Böhringer</span>
+</div>
+<span class=post-tags>
+#<a href=https://blog.opencore.ch/tags/devops/>devops</a>&nbsp;
+</span>
+<div class=post-content>
+To monitor your Docker swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host’s filesystem, /sys/fs/cgroup, /proc, and /var/run/docker.sock inside the container to do so. An example compose file for the sidecar looks like this:
+version: '3.7' services: metricbeat: image: docker.elastic.co/beats/metricbeat:7.16.1 user: root hostname: "{{.Node.Hostname}}-{{.Service.Name}}" configs: - source: metricbeat-config target: /usr/share/metricbeat/metricbeat.yml command: - -e - &ndash;strict.perms=false - &ndash;system.hostfs=/hostfs volumes: - type: bind source: / target: /hostfs read_only: true - type: bind source: /sys/fs/cgroup target: /hostfs/sys/fs/cgroup read_only: true - type: bind source: /proc target: /hostfs/proc read_only: true - type: bind source: /var/run/docker.
+</div>
+<div>
+<a class="read-more button" href=/posts/metricbeat-docker-swarm-setup/>Read more →</a>
+</div>
+</div>
+<div class="post on-list">
+<h1 class=post-title>
 <a href=https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/>How to perform zero-copy S3 uploads with the AWS C++ SDK</a>
 </h1>
 <div class=post-meta>
