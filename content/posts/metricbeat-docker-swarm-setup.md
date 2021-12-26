@@ -6,12 +6,13 @@ authorTwitter = "romanboehr"
 cover = ""
 tags = ["devops"]
 keywords = ["docker", "docker-swarm", "elastic", "metricbeat"]
-description = ""
+description = "How to use a Metricbeat sidecar container to monitor your Docker Swarm hosts and additional services."
 showFullContent = false
 +++
 
-To monitor your Docker swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host's filesystem, `/sys/fs/cgroup`, `/proc`, and `/var/run/docker.sock` inside the container to do so. An example compose file for the sidecar looks like this:
-```yaml
+To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host's filesystem, `/sys/fs/cgroup`, `/proc`, and `/var/run/docker.sock` inside the container to do so. An example compose file for the sidecar looks like this:
+
+{{< code language="yaml" title="docker-stack.yml" >}}
 version: '3.7'
 
 services:
@@ -49,11 +50,12 @@ services:
 configs:
   metricbeat-config:
     file: ./metricbeat.yml
-```
+{{< /code >}}
 
 The `hostname` ensures that the sidecar reports metrics with the hostname of the Swarm host (and the service name) such that you can distinguish the reported metrics easily.
 An example `metricbeat.yml` for monitoring the Swarm nodes is provided below:
-```yaml
+
+{{< code language="yaml" title="metricbeat.yml" >}}
 ## Metricbeat configuration
 ## https://github.com/elastic/beats/blob/master/deploy/docker/metricbeat.docker.yml
 #
@@ -90,7 +92,7 @@ processors:
 output.elasticsearch:
   hosts: ["elastic-01:9200"]
   ...
-```
+{{< /code >}}
 
 You can of course manually configure other modules in the file to monitor other services in your cluster. Thanks to the enabled `autodiscover` feature, this can also be done more easily by setting labels on the services you want to monitor, e.g. for Redis:
 ```yaml
