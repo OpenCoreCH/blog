@@ -58,8 +58,8 @@ OpenCore GmbH
 <p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With <code>ctypes</code>, this can be implemented quite easily.
 Let&rsquo;s say we have a shared library <code>libcpp.so</code> where a function <code>get_shared_memory</code> returns the pointer to an array of doubles that is stored on the heap:</p>
 <div class=collapsable-code>
-<input id=381579426 type=checkbox>
-<label for=381579426>
+<input id=653841297 type=checkbox>
+<label for=653841297>
 <span class=collapsable-code__language>cpp</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
 </label>
@@ -73,8 +73,8 @@ double* get_shared_memory(std::size_t num) {
 </div>
 <p>The function can be called from Python with <code>ctypes</code>:</p>
 <div class=collapsable-code>
-<input id=569471328 type=checkbox>
-<label for=569471328>
+<input id=432719568 type=checkbox>
+<label for=432719568>
 <span class=collapsable-code__language>python</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
 </label>
