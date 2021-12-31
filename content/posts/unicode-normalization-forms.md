@@ -27,6 +27,6 @@ This is known as [Unicode equivalence](https://en.wikipedia.org/wiki/Unicode_equ
         ...
     }
 ```
-This normalized path is then used for the second request, which fails because the file is stored in a different normalization form (NFD in this case) on the SMB share.
+This normalized path is then used for the second request, which fails because the file is stored in a different normalization form (NFD in this case) on the SMB server.
 
 So what can you do about this? Of course you could write a small script to normalize all your file names to NFC on all shares, but this may not be desirable for large shares with millions of files. But it turns out that I was not the first to experience this problem and there is a "NFD compatibility" option that can be set on a per-share basis. When it is enabled, the original [NFD name is also stored](https://github.com/owncloud/core/issues/21365#issuecomment-173637039) in the cache (which results in additional database queries, the option is therefore not enabled per default).
