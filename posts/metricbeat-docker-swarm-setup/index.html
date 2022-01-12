@@ -56,8 +56,8 @@ OpenCore GmbH
 <div class=post-content><div>
 <p>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&rsquo;s filesystem, <code>/sys/fs/cgroup</code>, <code>/proc</code>, and <code>/var/run/docker.sock</code> inside the container to do so. An example compose file for the sidecar looks like this:</p>
 <div class=collapsable-code>
-<input id=574316289 type=checkbox>
-<label for=574316289>
+<input id=291745368 type=checkbox>
+<label for=291745368>
 <span class=collapsable-code__language>yaml</span>
 <span class=collapsable-code__title>docker-stack.yml</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
@@ -105,8 +105,8 @@ configs:
 <p>The <code>hostname</code> ensures that the sidecar reports metrics with the hostname of the Swarm host (and the service name) such that you can distinguish the reported metrics easily.
 An example <code>metricbeat.yml</code> for monitoring the Swarm nodes is provided below:</p>
 <div class=collapsable-code>
-<input id=874925613 type=checkbox>
-<label for=874925613>
+<input id=154796823 type=checkbox>
+<label for=154796823>
 <span class=collapsable-code__language>yaml</span>
 <span class=collapsable-code__title>metricbeat.yml</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
@@ -181,7 +181,7 @@ output.elasticsearch:
 <footer class=footer>
 <div class=footer__inner>
 <div class=copyright>
-<span>© 2021 <a href=https://twitter.com/romanboehr/ target=_blank>Roman Böhringer</a></span>
+<span>© 2022 <a href=https://twitter.com/romanboehr/ target=_blank>Roman Böhringer</a></span>
 </div>
 </div>
 </footer>
