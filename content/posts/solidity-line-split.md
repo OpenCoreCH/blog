@@ -14,7 +14,7 @@ For the on-chain SVG generation of an NFT, I recently needed to split an (arbitr
 
 Let's assume that we use an external function which takes a `string` and returns a `string[]` array containing the individual lines. A straight-forward implementation looks like this:
 
-{{< code language="solidity" >}}
+{{< code language="javascript" title="First approach" >}}
     function lineSplit(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -41,7 +41,7 @@ When we pass a few strings such as "A", "AAA", or "A" * 41, the results looks ok
 
 Ok, let's rewrite the function such that it handles these complications correctly:
 
-{{< code language="solidity" >}}
+{{< code language="javascript" title="Second approach" >}}
     function lineSplit2(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -88,7 +88,7 @@ Wait what, our function removed the daughter from the second family??? This happ
 
 Let's change the function such that it does not do that. Note that this also makes the lines potentially much longer (in bytes), so we have to allocate a larger buffer for it:
 
-{{< code language="solidity" >}}
+{{< code language="javascript" title="Third approach" >}}
     function lineSplit3(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -141,7 +141,7 @@ Let's change the function such that it does not do that. Note that this also mak
 
 Our function now returns [👨‍👩‍👧‍👧👨‍👩‍👧‍👧, 👨‍👩‍👧‍👧]. So did we develop the perfect Solidity line splitting function and can be proud? Let's do a last test with the string "🤦🏿🤦🏿🤦🏿🤦🏿abcd🤦🏿". The function returns [🤦🏿🤦🏿🤦🏿🤦🏿abcd🤦, 🏿], which is not what we want! The problem here is that there is a skin tone modifier (without a zero width joiner) after the 🤦 and we split just between those characters. All right, let's fix that by avoiding splits before a `0xF0 0x9F 0x8F XY` where `XY` is `0xBB`, `0xBC`, `0xBD`, `0xBE`, `0xBF` (all possible skin tone modifiers):
 
-{{< code language="solidity" >}}
+{{< code language="javascript" title="Fourth approach" >}}
     function lineSplit4(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
