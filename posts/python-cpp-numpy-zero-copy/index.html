@@ -1,132 +1,30 @@
-<!doctype html><html lang=en>
-<head>
-<title>Exposing C/C++ Data as a Python NumPy Array :: OpenCore Blog</title>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily. Let&amp;rsquo;s say we have a shared library libcpp.so where a function get_shared_memory returns the pointer to an array of doubles that is stored on the heap:
-cpp    double* get_shared_memory(std::size_t num) { auto p = new double[num]; .">
-<meta name=keywords content="numpy,np">
-<meta name=robots content="noodp">
-<link rel=canonical href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/>
-<link rel=stylesheet href=https://blog.opencore.ch/assets/style.css>
-<link rel=stylesheet href=https://blog.opencore.ch/assets/blue.css>
-<link rel=apple-touch-icon-precomposed sizes=144x144 href=https://blog.opencore.ch/img/apple-touch-icon-144-precomposed.png>
-<link rel="shortcut icon" href=https://blog.opencore.ch/img/favicon/blue.png>
-<meta name=twitter:card content="summary">
-<meta name=twitter:site content>
-<meta name=twitter:creator content="romanboehr">
-<meta property="og:locale" content="en">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Exposing C/C++ Data as a Python NumPy Array :: OpenCore Blog">
-<meta property="og:description" content="I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily.">
-<meta property="og:url" content="https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/">
-<meta property="og:site_name" content="Exposing C/C++ Data as a Python NumPy Array">
-<meta property="og:image" content="https://blog.opencore.ch">
-<meta property="og:image:width" content="2048">
-<meta property="og:image:height" content="1024">
-<meta property="article:published_time" content="2021-12-26 00:00:00 +0000 UTC">
-</head>
-<body class=blue>
-<div class="container headings--one-size">
-<header class=header>
-<div class=header__inner>
-<div class=header__logo>
-<a href=/>
-<div class=logo>
-OpenCore GmbH
-</div>
-</a>
-</div>
-<div class=menu-trigger>menu</div>
-</div>
-</header>
-<div class=content>
-<div class=post>
-<h1 class=post-title>
-<a href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/>Exposing C/C++ Data as a Python NumPy Array</a></h1>
-<div class=post-meta>
-<span class=post-date>
-2021-12-26
-</span>
-<span class=post-author>:: Roman Böhringer</span>
-</div>
-<span class=post-tags>
-#<a href=https://blog.opencore.ch/tags/cpp/>cpp</a>&nbsp;
-#<a href=https://blog.opencore.ch/tags/python/>python</a>&nbsp;
-</span>
-<div class=post-content><div>
-<p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With <code>ctypes</code>, this can be implemented quite easily.
-Let&rsquo;s say we have a shared library <code>libcpp.so</code> where a function <code>get_shared_memory</code> returns the pointer to an array of doubles that is stored on the heap:</p>
-<div class=collapsable-code>
-<input id=932765418 type=checkbox>
-<label for=932765418>
-<span class=collapsable-code__language>cpp</span>
-<span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
-</label>
-<pre class=language-cpp><code>
+<!doctype html><html lang=en><head><title>Exposing C/C++ Data as a Python NumPy Array :: OpenCore Blog</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily. Let&amp;rsquo;s say we have a shared library libcpp.so where a function get_shared_memory returns the pointer to an array of doubles that is stored on the heap:
+cpp double* get_shared_memory(std::size_t num) { auto p = new double[num]; ."><meta name=keywords content="numpy,np"><meta name=robots content="noodp"><link rel=canonical href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/><link rel=stylesheet href=https://blog.opencore.ch/assets/style.css><link rel=stylesheet href=https://blog.opencore.ch/assets/blue.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=https://blog.opencore.ch/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=https://blog.opencore.ch/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content><meta name=twitter:creator content="romanboehr"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Exposing C/C++ Data as a Python NumPy Array :: OpenCore Blog"><meta property="og:description" content="I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily."><meta property="og:url" content="https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/"><meta property="og:site_name" content="Exposing C/C++ Data as a Python NumPy Array"><meta property="og:image" content="https://blog.opencore.ch"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2021-12-26 00:00:00 +0000 UTC"></head><body class=blue><div class="container headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>OpenCore GmbH</div></a></div><div class=menu-trigger>menu</div></div></header><div class=content><div class=post><h1 class=post-title><a href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/>Exposing C/C++ Data as a Python NumPy Array</a></h1><div class=post-meta><span class=post-date>2021-12-26</span>
+<span class=post-author>:: Roman Böhringer</span></div><span class=post-tags>#<a href=https://blog.opencore.ch/tags/cpp/>cpp</a>&nbsp;
+#<a href=https://blog.opencore.ch/tags/python/>python</a>&nbsp;</span><div class=post-content><div><p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With <code>ctypes</code>, this can be implemented quite easily.
+Let&rsquo;s say we have a shared library <code>libcpp.so</code> where a function <code>get_shared_memory</code> returns the pointer to an array of doubles that is stored on the heap:</p><div class=collapsable-code><input id=384519672 type=checkbox>
+<label for=384519672><span class=collapsable-code__language>cpp</span>
+<span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span></label><pre class=language-cpp><code>
 double* get_shared_memory(std::size_t num) {
     auto p = new double[num];
     ...
     return p;
 }
-</code></pre>
-</div>
-<p>The function can be called from Python with <code>ctypes</code>:</p>
-<div class=collapsable-code>
-<input id=697814523 type=checkbox>
-<label for=697814523>
-<span class=collapsable-code__language>python</span>
-<span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span>
-</label>
-<pre class=language-python><code>
+</code></pre></div><p>The function can be called from Python with <code>ctypes</code>:</p><div class=collapsable-code><input id=631584729 type=checkbox>
+<label for=631584729><span class=collapsable-code__language>python</span>
+<span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span></label><pre class=language-python><code>
 num_elem = 42
 
 libcpp = ctypes.CDLL(&#34;libcpp.so&#34;)
 libcpp.get_shared_memory.restype = ctypes.c_void_p 
 pointer = libcpp.get_shared_memory(num_elem)
-</code></pre>
-</div>
-<p>Afterwards, <code>pointer</code> can be interpreted from Python as a pointer to a double:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>double_p <span style=color:#f92672>=</span> ctypes<span style=color:#f92672>.</span>cast(pointer, ctypes<span style=color:#f92672>.</span>POINTER(ctypes<span style=color:#f92672>.</span>c_double))
-</code></pre></div><p>At this point, <code>double_p</code> is a object of type <code>LP_c_double</code>. It can already be used to set and get values of the C++ array, for instance we can do:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>double_p[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.0</span>
-print(double_p[<span style=color:#ae81ff>2</span>])
-</code></pre></div><p>But we cannot use a <code>LP_c_double</code> as a normal Python lists. For instance, there is no way for Python to know the length of the underlying buffer and calling <code>len(double_p)</code> will fail.
-However, we can also use <code>pointer</code> to create a NumPy array on top of the existing memory thanks to <code>np.ctypeslib.as_array</code>:</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>np_buff <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>ctypeslib<span style=color:#f92672>.</span>as_array((ctypes<span style=color:#f92672>.</span>c_double <span style=color:#f92672>*</span> num_elem)<span style=color:#f92672>.</span>from_address(pointer))
-</code></pre></div><p><code>np_buff</code> can now be used as a normal NumPy array. When you are done using it, you need to <code>free</code> the allocated memory in C++ again, as you will leak memory otherwise. The pointer that is returned in <code>get_shared_memory</code> should therefore be stored somewhere.</p>
-</div></div>
-<div class=pagination>
-<div class=pagination__title>
-<span class=pagination__title-h>Read other posts</span>
-<hr>
-</div>
-<div class=pagination__buttons>
-<span class="button previous">
-<a href=https://blog.opencore.ch/posts/savapage-uniflow/>
-<span class=button__icon>←</span>
-<span class=button__text>Using SavaPage as a Frontend for uniFLOW</span>
-</a>
-</span>
-<span class="button next">
-<a href=https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/>
-<span class=button__text>Setting up Metricbeat on a Docker Swarm Cluster</span>
-<span class=button__icon>→</span>
-</a>
-</span>
-</div>
-</div>
-</div>
-</div>
-<footer class=footer>
-<div class=footer__inner>
-<div class=copyright>
-<span>© 2022 <a href=https://twitter.com/romanboehr/ target=_blank>Roman Böhringer</a></span>
-</div>
-</div>
-</footer>
-<script src=https://blog.opencore.ch/assets/main.js></script>
-<script src=https://blog.opencore.ch/assets/prism.js></script>
-</div>
-</body>
-</html>
+</code></pre></div><p>Afterwards, <code>pointer</code> can be interpreted from Python as a pointer to a double:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>double_p <span style=color:#f92672>=</span> ctypes<span style=color:#f92672>.</span>cast(pointer, ctypes<span style=color:#f92672>.</span>POINTER(ctypes<span style=color:#f92672>.</span>c_double))
+</span></span></code></pre></div><p>At this point, <code>double_p</code> is a object of type <code>LP_c_double</code>. It can already be used to set and get values of the C++ array, for instance we can do:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>double_p[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1.0</span>
+</span></span><span style=display:flex><span>print(double_p[<span style=color:#ae81ff>2</span>])
+</span></span></code></pre></div><p>But we cannot use a <code>LP_c_double</code> as a normal Python lists. For instance, there is no way for Python to know the length of the underlying buffer and calling <code>len(double_p)</code> will fail.
+However, we can also use <code>pointer</code> to create a NumPy array on top of the existing memory thanks to <code>np.ctypeslib.as_array</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>np_buff <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>ctypeslib<span style=color:#f92672>.</span>as_array((ctypes<span style=color:#f92672>.</span>c_double <span style=color:#f92672>*</span> num_elem)<span style=color:#f92672>.</span>from_address(pointer))
+</span></span></code></pre></div><p><code>np_buff</code> can now be used as a normal NumPy array. When you are done using it, you need to <code>free</code> the allocated memory in C++ again, as you will leak memory otherwise. The pointer that is returned in <code>get_shared_memory</code> should therefore be stored somewhere.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://blog.opencore.ch/posts/savapage-uniflow/><span class=button__icon>←</span>
+<span class=button__text>Using SavaPage as a Frontend for uniFLOW</span></a></span>
+<span class="button next"><a href=https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/><span class=button__text>Setting up Metricbeat on a Docker Swarm Cluster</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2023 <a href=https://twitter.com/romanboehr/ target=_blank>Roman Böhringer</a></span></div></div></footer><script src=https://blog.opencore.ch/assets/main.js></script>
+<script src=https://blog.opencore.ch/assets/prism.js></script></div></body></html>
