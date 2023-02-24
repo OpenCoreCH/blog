@@ -35,7 +35,7 @@ Let's assume that we use an external function which takes a `string` and returns
     }
 {{< /code >}}
 
-When we pass a few strings such as "A", "AAA", or "A" * 41, the results looks ok. However, what if our string contains a character like è? When passing the string `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè`, we see the first problem: The function returns two lines, but the last character of the first line and the first of the second line are invalid. This happens because è is a multi-byte character with the UTF-8 encoding `0xC3 0xA8`, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:
+When we pass a few strings such as "A", "AAA", or `"A" * 41`, the results looks ok. However, what if our string contains a character like è? When passing the string `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè`, we see the first problem: The function returns two lines, but the last character of the first line and the first of the second line are invalid. This happens because è is a multi-byte character with the UTF-8 encoding `0xC3 0xA8`, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:
 - We no longer split the string into 40 characters, but (roughly) 40 bytes. While this is fine for our implementation, it may not be for others, in which case you would need to count the actual characters.
 - Each line can now have a different length (in bytes) as we need to include a few extra bytes (up to 3 extra bytes for 4 byte characters) when there is a multi-byte character at the end.
 
