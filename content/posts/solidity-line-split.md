@@ -1,6 +1,6 @@
 +++
 title = "Splitting a string into multiple lines in Solidity: How hard can it be?"
-date = "2023-02-25"
+date = "2023-02-24"
 author = "Roman Böhringer"
 authorTwitter = "romanboehr"
 cover = ""
