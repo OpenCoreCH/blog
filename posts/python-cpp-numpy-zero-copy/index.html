@@ -2,16 +2,16 @@
 cpp double* get_shared_memory(std::size_t num) { auto p = new double[num]; ."><meta name=keywords content="numpy,np"><meta name=robots content="noodp"><link rel=canonical href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/><link rel=stylesheet href=https://blog.opencore.ch/assets/style.css><link rel=stylesheet href=https://blog.opencore.ch/assets/blue.css><link rel=apple-touch-icon-precomposed sizes=144x144 href=https://blog.opencore.ch/img/apple-touch-icon-144-precomposed.png><link rel="shortcut icon" href=https://blog.opencore.ch/img/favicon/blue.png><meta name=twitter:card content="summary"><meta name=twitter:site content><meta name=twitter:creator content="romanboehr"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Exposing C/C++ Data as a Python NumPy Array :: OpenCore Blog"><meta property="og:description" content="I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily."><meta property="og:url" content="https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/"><meta property="og:site_name" content="Exposing C/C++ Data as a Python NumPy Array"><meta property="og:image" content="https://blog.opencore.ch"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:published_time" content="2021-12-26 00:00:00 +0000 UTC"></head><body class=blue><div class="container headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>OpenCore GmbH</div></a></div><div class=menu-trigger>menu</div></div></header><div class=content><div class=post><h1 class=post-title><a href=https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/>Exposing C/C++ Data as a Python NumPy Array</a></h1><div class=post-meta><span class=post-date>2021-12-26</span>
 <span class=post-author>:: Roman Böhringer</span></div><span class=post-tags>#<a href=https://blog.opencore.ch/tags/cpp/>cpp</a>&nbsp;
 #<a href=https://blog.opencore.ch/tags/python/>python</a>&nbsp;</span><div class=post-content><div><p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With <code>ctypes</code>, this can be implemented quite easily.
-Let&rsquo;s say we have a shared library <code>libcpp.so</code> where a function <code>get_shared_memory</code> returns the pointer to an array of doubles that is stored on the heap:</p><div class=collapsable-code><input id=486915732 type=checkbox>
-<label for=486915732><span class=collapsable-code__language>cpp</span>
+Let&rsquo;s say we have a shared library <code>libcpp.so</code> where a function <code>get_shared_memory</code> returns the pointer to an array of doubles that is stored on the heap:</p><div class=collapsable-code><input id=935841276 type=checkbox>
+<label for=935841276><span class=collapsable-code__language>cpp</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span></label><pre class=language-cpp><code>
 double* get_shared_memory(std::size_t num) {
     auto p = new double[num];
     ...
     return p;
 }
-</code></pre></div><p>The function can be called from Python with <code>ctypes</code>:</p><div class=collapsable-code><input id=674825391 type=checkbox>
-<label for=674825391><span class=collapsable-code__language>python</span>
+</code></pre></div><p>The function can be called from Python with <code>ctypes</code>:</p><div class=collapsable-code><input id=619372845 type=checkbox>
+<label for=619372845><span class=collapsable-code__language>python</span>
 <span class=collapsable-code__toggle data-label-expand=△ data-label-collapse=▽></span></label><pre class=language-python><code>
 num_elem = 42
 
