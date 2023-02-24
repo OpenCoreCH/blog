@@ -14,7 +14,7 @@ For the on-chain SVG generation of an NFT, I recently needed to split an (arbitr
 
 Let's assume that this is split up in an external function that takes a `string` and returns a `string[]` array containing the individual lines. A straight-forward implementation looks like this:
 
-```solidity
+{{< code language="solidity" >}}
     function lineSplit(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -33,13 +33,15 @@ Let's assume that this is split up in an external function that takes a `string`
         strLines[lines - 1] = string(bytesLines);
         return strLines;
     }
-```
-When we pass a few strings such as "A", "AAA", or "A" * 41, the results looks ok. However, what if our string contains a character like è? When passing the string `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè`, we see the first problems: The function returns two lines, but the last character of the first line and the first of the second line are invalid. That's because è is a multi-byte character with the UTF-8 encoding `0xC3 0xA8`, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:
+{{< /code >}}
+
+When we pass a few strings such as "A", "AAA", or "A" * 41, the results looks ok. However, what if our string contains a character like è? When passing the string `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè`, we see the first problems: The function returns two lines, but the last character of the first line and the first of the second line are invalid. That occurs because è is a multi-byte character with the UTF-8 encoding `0xC3 0xA8`, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:
 - We no longer split the string into 40 characters, but (roughly) 40 bytes. While this is fine for our implementation, it may not be for others, in which case you would need to count the actual characters.
 - Each line can now have a different length (in bytes) as we need to include a few extra bytes (up to 3 extra bytes for 4 byte characters) when there is a multi-byte character at the end.
 
 Ok, let's rewrite the function such that it handles these complications correctly:
-```solidity
+
+{{< code language="solidity" >}}
     function lineSplit2(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -76,13 +78,15 @@ Ok, let's rewrite the function such that it handles these complications correctl
         }
         return strLines;
     }
-```
+{{< /code >}}
+
 Unicode continuation bytes are recognizable by the two top bits (which are 10 for them) and we can use inline assembly to change the length of the bytes array to the correct length before casting it to a string.
 
 Strings like `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè` or `AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAèè` are now correctly handled, nice! We can even use the functions for emojis, a string like 😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀😀 is correctly handled. However, something weird happens when we pass the string 👨‍👩‍👧‍👧👨‍👩‍👧‍👧👨‍👩‍👧‍👧. The output of the function is [👨‍👩‍👧‍👧👨‍👩‍👧, ‍👧👨‍👩‍👧‍👧]. Wait what, our function removed the daughter from the second family??? This happens because emojis like 👨‍👩‍👧‍👧 are composed of 4 individual emojis that are stitched together with a zero width joiner (`0xE2 0x80 0x8D`) and we potentially break on these joiners (which are individual UTF8 characters).
 
-Ok, let's change the function such that it does not do that. Note that this also makes the lines potentially much longer (in bytes), so we have to allocate a larger buffer for it:
-```solidity
+Let's change the function such that it does not do that. Note that this also makes the lines potentially much longer (in bytes), so we have to allocate a larger buffer for it:
+
+{{< code language="solidity" >}}
     function lineSplit3(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -131,9 +135,11 @@ Ok, let's change the function such that it does not do that. Note that this also
         }
         return strLines;
     }
-```
+{{< /code >}}
+
 Our function now returns [👨‍👩‍👧‍👧👨‍👩‍👧‍👧, 👨‍👩‍👧‍👧]. So did we develop the perfect Solidity line splitting function and can be proud? Let's do a last test with the string "🤦🏿🤦🏿🤦🏿🤦🏿abcd🤦🏿". The function returns [🤦🏿🤦🏿🤦🏿🤦🏿abcd🤦, 🏿], which is not what we want! The problem here is that there is a skin tone modifier (without a zero width joiner) after the 🤦 and we split just between those characters. All right, let's fix that by avoiding splits before a `0xF0 0x9F 0x8F XY` where `XY` is `0xBB`, `0xBC`, `0xBD`, `0xBE`, `0xBF` (all possible skin tone modifiers):
-```solidity
+
+{{< code language="solidity" >}}
     function lineSplit4(string memory text) external pure returns (string[] memory) {
         bytes memory textBytes = bytes(text);
         uint lengthInBytes = textBytes.length;
@@ -188,7 +194,7 @@ Our function now returns [👨‍👩‍👧‍👧👨‍👩‍👧‍👧, �
         }
         return strLines;
     }
-```
+{{< /code >}}
 
 Now, this case is handled correctly as well. So is this the perfect Solidity line splitting algorithm that handles every input perfectly? No, definitely not. Unicode Line Breaking is very involved and [there is a 25 paper annex on this topic](https://unicode.org/reports/tr14/). While the algorithm handles some (commonly occuring) edge cases correctly, there are definitely others that could be problematic, especially with text in other characters (e.g., chinese ones).
 
