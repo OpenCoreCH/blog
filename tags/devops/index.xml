@@ -3,8 +3,8 @@
 
 
  &lt;div class="collapsable-code">
- &lt;input id="571293864" type="checkbox" />
- &lt;label for="571293864">
+ &lt;input id="397628451" type="checkbox" />
+ &lt;label for="397628451">
  &lt;span class="collapsable-code__language">yaml&lt;/span>
  &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
