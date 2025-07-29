@@ -61,5 +61,5 @@ ignoreLogs = ['warning-goldmark-raw-html']
     missingBackButtonLabel = "Back to home page"
 
     [languages.en.params.logo]
-      logoText = "OpenCore GmbH"
+      logoText = "Roman's Random Thoughts"
       logoHomeLink = "/"
