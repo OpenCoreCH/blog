@@ -46,7 +46,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 
 
 [languages]
-  [languages.en]
+  [languages.en.params]
     languageName = "English"
     title = "OpenCore Blog"
     subtitle = ""
