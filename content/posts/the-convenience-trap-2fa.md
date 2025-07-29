@@ -37,7 +37,7 @@ Let's analyze these methods against realistic threats that the average user face
 
 This is an increasingly popular model. You have a banking app on your phone, and you unlock it with the same biometrics (Face ID, fingerprint) you use to unlock the device itself.
 
-While convenient, this is not true $2$FA. The "something you have" (the phone) and the "something you are" (your face/fingerprint) are often both gated by a single, weaker factor: the "something you know" (your device passcode). For instance on an iPhone, you can register a new face for FaceID if you know the passcode.
+While convenient, this is not true **2**FA. The "something you have" (the phone) and the "something you are" (your face/fingerprint) are often both gated by a single, weaker factor: the "something you know" (your device passcode). For instance on an iPhone, you can register a new face for FaceID if you know the passcode.
 
 Thieves actively exploit this by "shoulder surfing" a victim's iPhone passcode before stealing the device. As [reported by the Wall Street Journal](https://www.wsj.com/video/series/joanna-stern-personal-technology/an-iphone-thief-explains-how-he-steals-your-passcode-and-bank-account/C37B4009-E548-4459-8D0A-22B7400C3FEA), once a thief has your passcode, they can easily enroll their own face in Face ID and gain full access to your digital life, including your banking apps. Apple's "Stolen Device Protection" is a step in the right direction, but it's a mitigating control that isn't enabled by default for all users.
 
