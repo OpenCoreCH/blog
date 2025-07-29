@@ -46,7 +46,7 @@ Thieves actively exploit this by "shoulder surfing" a victim's iPhone passcode b
 
 ### 2. SMS-based Tokens
 
-SMS as a second factor is notoriously insecure and should have been deprecated years ago. It's vulnerable to well-known attacks like SIM swapping, IMSI catchers, and flaws in the global SS7 telephony network. Despite this, there are unfortunately major financial institutions (e.g., Saxo Bank with $133B client assets) still enable it by default.
+SMS as a second factor is notoriously insecure and should have been deprecated years ago. It's vulnerable to well-known attacks like SIM swapping, IMSI catchers, and flaws in the global SS7 telephony network. Despite this, there are unfortunately major financial institutions (e.g., Saxo Bank with $133B client assets) that still enable it by default.
 
 Convenience features pour gasoline on this fire. With notification mirroring (a standard feature in Apple's ecosystem), an SMS 2FA code sent to your phone instantly appears on your paired—and potentially compromised—laptop or tablet. This completely shatters the illusion that SMS is an "out-of-band" factor.
 
