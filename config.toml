@@ -2,7 +2,6 @@ title = 'OpenCore Blog'
 baseurl = "https://blog.opencore.ch"
 languageCode = "en-us"
 theme = "terminal"
-paginate = 5
 ignoreLogs = ['warning-goldmark-raw-html']
 
 [params]
