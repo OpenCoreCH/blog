@@ -1,3 +1,33 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>python on OpenCore Blog</title><link>https://blog.opencore.ch/tags/python/</link><description>Recent content in python on OpenCore Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>Although most of the examples and Boost&amp;rsquo;s documentation uses bjam, you can also use CMake for your Boost.Python projects. A minimal CMakeLists.txt to compile your Python library is provided below.
-cmake_minimum_required(VERSION 3.10) project(yourlib) set(CMAKE_CXX_STANDARD 17) find_package(Boost COMPONENTS system python3 REQUIRED) find_package(Python3 COMPONENTS Interpreter Development REQUIRED) add_library(yourlib MODULE your_lib.cpp your_other_files.cpp) You may want to compile Boost as a static library such that you only have to ship one file. This can be achieved by providing cxxflags=&amp;quot;-fPIC&amp;quot; link=static install to b2 when compiling Boost from source.</description></item><item><title>Exposing C/C++ Data as a Python NumPy Array</title><link>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</link><pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</guid><description>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily. Let&amp;rsquo;s say we have a shared library libcpp.so where a function get_shared_memory returns the pointer to an array of doubles that is stored on the heap:
-cpp double* get_shared_memory(std::size_t num) { auto p = new double[num]; .</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on OpenCore Blog</title><link>https://blog.opencore.ch/tags/python/</link><description>Recent content in Python on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>&lt;p>Although most of the examples and Boost&amp;rsquo;s documentation uses &lt;code>bjam&lt;/code>, you can also use CMake for your Boost.Python projects. A minimal &lt;code>CMakeLists.txt&lt;/code> to compile your Python library is provided below.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>cmake_minimum_required(VERSION 3.10)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>project(yourlib)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>set(CMAKE_CXX_STANDARD 17)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>find_package(Boost COMPONENTS system python3 REQUIRED)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>add_library(yourlib MODULE your_lib.cpp your_other_files.cpp)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You may want to compile Boost as a static library such that you only have to ship one file. This can be achieved by providing &lt;code>cxxflags=&amp;quot;-fPIC&amp;quot; link=static install&lt;/code> to &lt;code>b2&lt;/code> when compiling Boost from source. I personally always use Docker containers (one for each Python version with the correct header files) and use the following command to integrate the statically-linked boost library into the container:&lt;/p></description></item><item><title>Exposing C/C++ Data as a Python NumPy Array</title><link>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</link><pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</guid><description>&lt;p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With &lt;code>ctypes&lt;/code>, this can be implemented quite easily.
+Let&amp;rsquo;s say we have a shared library &lt;code>libcpp.so&lt;/code> where a function &lt;code>get_shared_memory&lt;/code> returns the pointer to an array of doubles that is stored on the heap:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="139728546" type="checkbox" />
+ &lt;label for="139728546">
+ &lt;span class="collapsable-code__language">cpp&lt;/span>
+ 
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-cpp" >&lt;code>
+double* get_shared_memory(std::size_t num) {
+ auto p = new double[num];
+ ...
+ return p;
+}
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>The function can be called from Python with &lt;code>ctypes&lt;/code>:&lt;/p></description></item></channel></rss>

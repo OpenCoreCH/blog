@@ -1,3 +1,36 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>solidity on OpenCore Blog</title><link>https://blog.opencore.ch/tags/solidity/</link><description>Recent content in solidity on OpenCore Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?
-Let&amp;rsquo;s assume that we use an external function which takes a string and returns a string[] array containing the individual lines. A straight-forward implementation looks like this:
-solidity First approach function lineSplit(string memory text) external pure returns (string[] memory) { bytes memory textBytes = bytes(text); uint lengthInBytes = textBytes.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on OpenCore Blog</title><link>https://blog.opencore.ch/tags/solidity/</link><description>Recent content in Solidity on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>&lt;p>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?&lt;/p>
+&lt;p>Let&amp;rsquo;s assume that we use an external function which takes a &lt;code>string&lt;/code> and returns a &lt;code>string[]&lt;/code> array containing the individual lines. A straight-forward implementation looks like this:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="289135674" type="checkbox" />
+ &lt;label for="289135674">
+ &lt;span class="collapsable-code__language">solidity&lt;/span>
+ &lt;span class="collapsable-code__title">First approach&lt;/span>
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-solidity" >&lt;code>
+ function lineSplit(string memory text) external pure returns (string[] memory) {
+ bytes memory textBytes = bytes(text);
+ uint lengthInBytes = textBytes.length;
+ require(lengthInBytes &amp;gt; 0, &amp;#34;Invalid length&amp;#34;);
+ uint lines = (lengthInBytes - 1) / 40 &amp;#43; 1;
+ string[] memory strLines = new string[](lines);
+ bytes memory bytesLines = new bytes(40);
+ for (uint i; i &amp;lt; lengthInBytes; &amp;#43;&amp;#43;i) {
+ if (i &amp;gt; 0 &amp;amp;&amp;amp; i % 40 == 0) {
+ strLines[i / 40 - 1] = string(bytesLines);
+ bytesLines = new bytes(40);
+ }
+ bytes1 character = textBytes[i];
+ bytesLines[i % 40] = character;
+ }
+ strLines[lines - 1] = string(bytesLines);
+ return strLines;
+ }
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>When we pass a few strings such as &amp;ldquo;A&amp;rdquo;, &amp;ldquo;AAA&amp;rdquo;, or &lt;code>&amp;quot;A&amp;quot; * 41&lt;/code>, the results looks ok. However, what if our string contains a character like è? When passing the string &lt;code>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè&lt;/code>, we see the first problem: The function returns two lines, but the last character of the first line and the first of the second line are invalid. This happens because è is a multi-byte character with the UTF-8 encoding &lt;code>0xC3 0xA8&lt;/code>, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:&lt;/p></description></item></channel></rss>

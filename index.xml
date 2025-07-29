@@ -1,7 +1,137 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenCore Blog</title><link>https://blog.opencore.ch/</link><description>Recent content on OpenCore Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/index.xml" rel="self" type="application/rss+xml"/><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?
-Let&amp;rsquo;s assume that we use an external function which takes a string and returns a string[] array containing the individual lines. A straight-forward implementation looks like this:
-solidity First approach function lineSplit(string memory text) external pure returns (string[] memory) { bytes memory textBytes = bytes(text); uint lengthInBytes = textBytes.</description></item><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>Although most of the examples and Boost&amp;rsquo;s documentation uses bjam, you can also use CMake for your Boost.Python projects. A minimal CMakeLists.txt to compile your Python library is provided below.
-cmake_minimum_required(VERSION 3.10) project(yourlib) set(CMAKE_CXX_STANDARD 17) find_package(Boost COMPONENTS system python3 REQUIRED) find_package(Python3 COMPONENTS Interpreter Development REQUIRED) add_library(yourlib MODULE your_lib.cpp your_other_files.cpp) You may want to compile Boost as a static library such that you only have to ship one file. This can be achieved by providing cxxflags=&amp;quot;-fPIC&amp;quot; link=static install to b2 when compiling Boost from source.</description></item><item><title>Using SavaPage as a Frontend for uniFLOW</title><link>https://blog.opencore.ch/posts/savapage-uniflow/</link><pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/savapage-uniflow/</guid><description>A uniFLOW Queue (that is available over SMB) can be integrated quite easily into SavaPage with the CUPS SMB backend. To add it, simply run the following command on the SavaPage server:
-lpadmin -p uniflow_queue -v smb://serviceaccount:servicepassword@domain/uniflow_server/uniflow_queue -P path/to/driver.ppd While this works, all print jobs will arrive at the uniFLOW server with the used serviceaccount. SavaPage sends the username of the user that submitted the job in the For attribute of the transmitted PostScript file.</description></item><item><title>Exposing C/C++ Data as a Python NumPy Array</title><link>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</link><pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</guid><description>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With ctypes, this can be implemented quite easily. Let&amp;rsquo;s say we have a shared library libcpp.so where a function get_shared_memory returns the pointer to an array of doubles that is stored on the heap:
-cpp double* get_shared_memory(std::size_t num) { auto p = new double[num]; .</description></item><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, /sys/fs/cgroup, /proc, and /var/run/docker.sock inside the container to do so. An example compose file for the sidecar looks like this:
-yaml docker-stack.yml version: &amp;#39;3.7&amp;#39; services: metricbeat: image: docker.elastic.co/beats/metricbeat:7.16.1 user: root hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34; configs: - source: metricbeat-config target: /usr/share/metricbeat/metricbeat.yml command: - -e - --strict.perms=false - --system.hostfs=/hostfs volumes: - type: bind source: / target: /hostfs read_only: true - type: bind source: /sys/fs/cgroup target: /hostfs/sys/fs/cgroup read_only: true - type: bind source: /proc target: /hostfs/proc read_only: true - type: bind source: /var/run/docker.</description></item><item><title>How to perform zero-copy S3 uploads with the AWS C++ SDK</title><link>https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/</link><pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/</guid><description>If you&amp;rsquo;re ever using the AWS C++ SDK in some constrained environment (such as Lambda functions with limited memory) or care about memory copies, you probably run into the issue of how to upload an existing buffer without copying it (as other developers did). You can write your own streambuf wrapper to do so, but if you&amp;rsquo;re already using boost in your project, boost::interprocess::bufferstream is a very straightforward way to do it:</description></item><item><title>Unicode Normalization Forms: When ö != ö</title><link>https://blog.opencore.ch/posts/unicode-normalization-forms/</link><pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/unicode-normalization-forms/</guid><description>Some time ago, a very weird issue was reported to me about a Nextcloud system. The user uploaded a file with an &amp;ldquo;ö&amp;rdquo; on a SMB share that was configured as an external storage in the Nextcloud server. But when accessing the folder containing the file over WebDAV, it did not appear (no matter which WebDAV client was used). After ruling out the usual causes (wrong permissions, etc&amp;hellip;), I analyzed the network traffic between the WebDAV client and the server and saw that the file name is indeed not returned after issuing a PROPFIND.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenCore Blog</title><link>https://blog.opencore.ch/</link><description>Recent content on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 29 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/index.xml" rel="self" type="application/rss+xml"/><item><title>The Convenience Trap: Why Seamless Banking Access Can Turn 2FA into 1FA</title><link>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</guid><description>&lt;p>Multi-factor authentication (MFA) is the bedrock of modern digital security. Its principle is simple and powerful. As Wikipedia defines it, MFA is:&lt;/p>
+&lt;blockquote>
+&lt;p>an electronic authentication method in which a user is granted access to a website or application only after successfully presenting two or more distinct types of evidence (or factors) to an authentication mechanism.&lt;/p>&lt;/blockquote>
+&lt;p>The key phrase here is &lt;strong>distinct types of evidence&lt;/strong>. These factors are typically categorized as something you know (a password), something you have (a device), and something you are (a biometric). Any financial institution worth its salt implements MFA. Having opened many bank accounts in Switzerland, I&amp;rsquo;ve seen the full spectrum of authentication methods that are used here. They generally fall into one of these categories:&lt;/p></description></item><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>&lt;p>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?&lt;/p>
+&lt;p>Let&amp;rsquo;s assume that we use an external function which takes a &lt;code>string&lt;/code> and returns a &lt;code>string[]&lt;/code> array containing the individual lines. A straight-forward implementation looks like this:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="289135674" type="checkbox" />
+ &lt;label for="289135674">
+ &lt;span class="collapsable-code__language">solidity&lt;/span>
+ &lt;span class="collapsable-code__title">First approach&lt;/span>
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-solidity" >&lt;code>
+ function lineSplit(string memory text) external pure returns (string[] memory) {
+ bytes memory textBytes = bytes(text);
+ uint lengthInBytes = textBytes.length;
+ require(lengthInBytes &amp;gt; 0, &amp;#34;Invalid length&amp;#34;);
+ uint lines = (lengthInBytes - 1) / 40 &amp;#43; 1;
+ string[] memory strLines = new string[](lines);
+ bytes memory bytesLines = new bytes(40);
+ for (uint i; i &amp;lt; lengthInBytes; &amp;#43;&amp;#43;i) {
+ if (i &amp;gt; 0 &amp;amp;&amp;amp; i % 40 == 0) {
+ strLines[i / 40 - 1] = string(bytesLines);
+ bytesLines = new bytes(40);
+ }
+ bytes1 character = textBytes[i];
+ bytesLines[i % 40] = character;
+ }
+ strLines[lines - 1] = string(bytesLines);
+ return strLines;
+ }
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>When we pass a few strings such as &amp;ldquo;A&amp;rdquo;, &amp;ldquo;AAA&amp;rdquo;, or &lt;code>&amp;quot;A&amp;quot; * 41&lt;/code>, the results looks ok. However, what if our string contains a character like è? When passing the string &lt;code>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAè&lt;/code>, we see the first problem: The function returns two lines, but the last character of the first line and the first of the second line are invalid. This happens because è is a multi-byte character with the UTF-8 encoding &lt;code>0xC3 0xA8&lt;/code>, but our implementation splits on bytes. We therefore need to adjust our implementation such that it does not split between multi-byte characters. This introduces a few complications:&lt;/p></description></item><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>&lt;p>Although most of the examples and Boost&amp;rsquo;s documentation uses &lt;code>bjam&lt;/code>, you can also use CMake for your Boost.Python projects. A minimal &lt;code>CMakeLists.txt&lt;/code> to compile your Python library is provided below.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>cmake_minimum_required(VERSION 3.10)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>project(yourlib)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>set(CMAKE_CXX_STANDARD 17)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>find_package(Boost COMPONENTS system python3 REQUIRED)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>add_library(yourlib MODULE your_lib.cpp your_other_files.cpp)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>You may want to compile Boost as a static library such that you only have to ship one file. This can be achieved by providing &lt;code>cxxflags=&amp;quot;-fPIC&amp;quot; link=static install&lt;/code> to &lt;code>b2&lt;/code> when compiling Boost from source. I personally always use Docker containers (one for each Python version with the correct header files) and use the following command to integrate the statically-linked boost library into the container:&lt;/p></description></item><item><title>Using SavaPage as a Frontend for uniFLOW</title><link>https://blog.opencore.ch/posts/savapage-uniflow/</link><pubDate>Wed, 12 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/savapage-uniflow/</guid><description>&lt;p>A &lt;a href="https://www.uniflowonline.com">uniFLOW&lt;/a> Queue (that is available over SMB) can be integrated quite easily into &lt;a href="https://www.savapage.org/">SavaPage&lt;/a> with the CUPS SMB backend. To add it, simply run the following command on the SavaPage server:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>lpadmin -p uniflow_queue -v smb://serviceaccount:servicepassword@domain/uniflow_server/uniflow_queue -P path/to/driver.ppd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>While this works, all print jobs will arrive at the uniFLOW server with the used &lt;code>serviceaccount&lt;/code>.
+SavaPage sends the username of the user that submitted the job in the &lt;code>For&lt;/code> attribute of the transmitted PostScript file.
+However, uniFlOW considers in its default configuration only the user that submitted the print job to the SMB queue and ignores this attribute.
+Follow-Me-Printing will therefore not work, as all print jobs are assigned to the account &lt;code>serviceaccount&lt;/code>.&lt;/p></description></item><item><title>Exposing C/C++ Data as a Python NumPy Array</title><link>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</link><pubDate>Sun, 26 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/python-cpp-numpy-zero-copy/</guid><description>&lt;p>I recently needed to use memory that was allocated inside a C++ library in a Python application which expects a NumPy array without performing any copies. With &lt;code>ctypes&lt;/code>, this can be implemented quite easily.
+Let&amp;rsquo;s say we have a shared library &lt;code>libcpp.so&lt;/code> where a function &lt;code>get_shared_memory&lt;/code> returns the pointer to an array of doubles that is stored on the heap:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="139728546" type="checkbox" />
+ &lt;label for="139728546">
+ &lt;span class="collapsable-code__language">cpp&lt;/span>
+ 
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-cpp" >&lt;code>
+double* get_shared_memory(std::size_t num) {
+ auto p = new double[num];
+ ...
+ return p;
+}
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>The function can be called from Python with &lt;code>ctypes&lt;/code>:&lt;/p></description></item><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>&lt;p>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, &lt;code>/sys/fs/cgroup&lt;/code>, &lt;code>/proc&lt;/code>, and &lt;code>/var/run/docker.sock&lt;/code> inside the container to do so. An example compose file for the sidecar looks like this:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="324689571" type="checkbox" />
+ &lt;label for="324689571">
+ &lt;span class="collapsable-code__language">yaml&lt;/span>
+ &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-yaml" >&lt;code>
+version: &amp;#39;3.7&amp;#39;
+
+services:
+ metricbeat:
+ image: docker.elastic.co/beats/metricbeat:7.16.1
+ user: root
+ hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34;
+ configs:
+ - source: metricbeat-config
+ target: /usr/share/metricbeat/metricbeat.yml
+ command:
+ - -e
+ - --strict.perms=false
+ - --system.hostfs=/hostfs
+ volumes:
+ - type: bind
+ source: /
+ target: /hostfs
+ read_only: true
+ - type: bind
+ source: /sys/fs/cgroup
+ target: /hostfs/sys/fs/cgroup
+ read_only: true
+ - type: bind
+ source: /proc
+ target: /hostfs/proc
+ read_only: true
+ - type: bind
+ source: /var/run/docker.sock
+ target: /var/run/docker.sock
+ read_only: true
+ deploy:
+ mode: global
+
+configs:
+ metricbeat-config:
+ file: ./metricbeat.yml
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>The &lt;code>hostname&lt;/code> ensures that the sidecar reports metrics with the hostname of the Swarm host (and the service name) such that you can distinguish the reported metrics easily.
+An example &lt;code>metricbeat.yml&lt;/code> for monitoring the Swarm nodes is provided below:&lt;/p></description></item><item><title>How to perform zero-copy S3 uploads with the AWS C++ SDK</title><link>https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/</link><pubDate>Sat, 11 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/aws-cpp-sdk-zero-copy-upload/</guid><description>&lt;p>If you&amp;rsquo;re ever using the AWS C++ SDK in some constrained environment (such as Lambda functions with limited memory) or care about memory copies, you probably run into the issue of how to upload an existing buffer without copying it (&lt;a href="https://github.com/aws/aws-sdk-cpp/issues/64">as&lt;/a> &lt;a href="https://github.com/aws/aws-sdk-cpp/issues/533">other&lt;/a> &lt;a href="https://github.com/aws/aws-sdk-cpp/issues/785">developers&lt;/a> &lt;a href="https://github.com/aws/aws-sdk-cpp/issues/1430">did&lt;/a>).
+You can write your own &lt;code>streambuf&lt;/code> wrapper to do so, but if you&amp;rsquo;re already using &lt;code>boost&lt;/code> in your project, &lt;code>boost::interprocess::bufferstream&lt;/code> is a very straightforward way to do it:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-cpp" data-lang="cpp">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">char&lt;/span>&lt;span style="color:#f92672">*&lt;/span> buf;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>std&lt;span style="color:#f92672">::&lt;/span>size_t len;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">const&lt;/span> std&lt;span style="color:#f92672">::&lt;/span>shared_ptr&lt;span style="color:#f92672">&amp;lt;&lt;/span>Aws&lt;span style="color:#f92672">::&lt;/span>IOStream&lt;span style="color:#f92672">&amp;gt;&lt;/span> data &lt;span style="color:#f92672">=&lt;/span> Aws&lt;span style="color:#f92672">::&lt;/span>MakeShared&lt;span style="color:#f92672">&amp;lt;&lt;/span>boost&lt;span style="color:#f92672">::&lt;/span>interprocess&lt;span style="color:#f92672">::&lt;/span>bufferstream&lt;span style="color:#f92672">&amp;gt;&lt;/span>(TAG, buf, buf_len);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>data&lt;/code> can then be used as usual:&lt;/p></description></item><item><title>Unicode Normalization Forms: When ö != ö</title><link>https://blog.opencore.ch/posts/unicode-normalization-forms/</link><pubDate>Tue, 01 Jun 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/unicode-normalization-forms/</guid><description>&lt;p>Some time ago, a very weird issue was reported to me about a Nextcloud system. The user uploaded a file with an &amp;ldquo;ö&amp;rdquo; on a SMB share that was configured as an external storage in the Nextcloud server. But when accessing the folder containing the file over WebDAV, it did not appear (no matter which WebDAV client was used). After ruling out the usual causes (wrong permissions, etc&amp;hellip;), I analyzed the network traffic between the WebDAV client and the server and saw that the file name is indeed not returned after issuing a &lt;code>PROPFIND&lt;/code>. So I set some breakpoints in the Nextcloud source code to analyze if it is also not returned by the SMB server.
+It was returned by the SMB server, but when the Nextcloud system requested more metadata for the file (with the path in the request), the SMB server returned a &amp;ldquo;file not found&amp;rdquo; error, which lead Nextcloud to discard the file.
+How can it happen that the file is first returned by the SMB server when listing files but then the server suddenly reports an error when requesting more metadata?&lt;/p></description></item></channel></rss>

@@ -1,2 +1,55 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>devops on OpenCore Blog</title><link>https://blog.opencore.ch/tags/devops/</link><description>Recent content in devops on OpenCore Blog</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, /sys/fs/cgroup, /proc, and /var/run/docker.sock inside the container to do so. An example compose file for the sidecar looks like this:
-yaml docker-stack.yml version: &amp;#39;3.7&amp;#39; services: metricbeat: image: docker.elastic.co/beats/metricbeat:7.16.1 user: root hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34; configs: - source: metricbeat-config target: /usr/share/metricbeat/metricbeat.yml command: - -e - --strict.perms=false - --system.hostfs=/hostfs volumes: - type: bind source: / target: /hostfs read_only: true - type: bind source: /sys/fs/cgroup target: /hostfs/sys/fs/cgroup read_only: true - type: bind source: /proc target: /hostfs/proc read_only: true - type: bind source: /var/run/docker.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on OpenCore Blog</title><link>https://blog.opencore.ch/tags/devops/</link><description>Recent content in Devops on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>&lt;p>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, &lt;code>/sys/fs/cgroup&lt;/code>, &lt;code>/proc&lt;/code>, and &lt;code>/var/run/docker.sock&lt;/code> inside the container to do so. An example compose file for the sidecar looks like this:&lt;/p>
+
+
+
+ &lt;div class="collapsable-code">
+ &lt;input id="324689571" type="checkbox" />
+ &lt;label for="324689571">
+ &lt;span class="collapsable-code__language">yaml&lt;/span>
+ &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
+ &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
+ &lt;/label>
+ &lt;pre class="language-yaml" >&lt;code>
+version: &amp;#39;3.7&amp;#39;
+
+services:
+ metricbeat:
+ image: docker.elastic.co/beats/metricbeat:7.16.1
+ user: root
+ hostname: &amp;#34;{{.Node.Hostname}}-{{.Service.Name}}&amp;#34;
+ configs:
+ - source: metricbeat-config
+ target: /usr/share/metricbeat/metricbeat.yml
+ command:
+ - -e
+ - --strict.perms=false
+ - --system.hostfs=/hostfs
+ volumes:
+ - type: bind
+ source: /
+ target: /hostfs
+ read_only: true
+ - type: bind
+ source: /sys/fs/cgroup
+ target: /hostfs/sys/fs/cgroup
+ read_only: true
+ - type: bind
+ source: /proc
+ target: /hostfs/proc
+ read_only: true
+ - type: bind
+ source: /var/run/docker.sock
+ target: /var/run/docker.sock
+ read_only: true
+ deploy:
+ mode: global
+
+configs:
+ metricbeat-config:
+ file: ./metricbeat.yml
+&lt;/code>&lt;/pre>
+ &lt;/div>
+
+
+&lt;p>The &lt;code>hostname&lt;/code> ensures that the sidecar reports metrics with the hostname of the Swarm host (and the service name) such that you can distinguish the reported metrics easily.
+An example &lt;code>metricbeat.yml&lt;/code> for monitoring the Swarm nodes is provided below:&lt;/p></description></item></channel></rss>
