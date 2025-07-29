@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>OpenCore Blog</title><link>https://blog.opencore.ch/</link><description>Recent content on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 29 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/index.xml" rel="self" type="application/rss+xml"/><item><title>The Convenience Trap: Why Seamless Banking Access Can Turn 2FA into 1FA</title><link>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</guid><description>&lt;p>Multi-factor authentication (MFA) is the bedrock of modern digital security. Its principle is simple and powerful. As Wikipedia defines it, MFA is:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Roman's Random Thoughts</title><link>https://blog.opencore.ch/</link><description>Recent content on Roman's Random Thoughts</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 29 Jul 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/index.xml" rel="self" type="application/rss+xml"/><item><title>The Convenience Trap: Why Seamless Banking Access Can Turn 2FA into 1FA</title><link>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</link><pubDate>Tue, 29 Jul 2025 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/the-convenience-trap-2fa/</guid><description>&lt;p>Multi-factor authentication (MFA) is the bedrock of modern digital security. Its principle is simple and powerful. As Wikipedia defines it, MFA is:&lt;/p>
 &lt;blockquote>
 &lt;p>an electronic authentication method in which a user is granted access to a website or application only after successfully presenting two or more distinct types of evidence (or factors) to an authentication mechanism.&lt;/p>&lt;/blockquote>
 &lt;p>The key phrase here is &lt;strong>distinct types of evidence&lt;/strong>. These factors are typically categorized as something you know (a password), something you have (a device), and something you are (a biometric). Any financial institution worth its salt implements MFA. Having opened many bank accounts in Switzerland, I&amp;rsquo;ve seen the full spectrum of authentication methods that are used here. They generally fall into one of these categories:&lt;/p></description></item><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>&lt;p>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?&lt;/p>
@@ -7,8 +7,8 @@
 
 
  &lt;div class="collapsable-code">
- &lt;input id="289135674" type="checkbox" />
- &lt;label for="289135674">
+ &lt;input id="258734169" type="checkbox" />
+ &lt;label for="258734169">
  &lt;span class="collapsable-code__language">solidity&lt;/span>
  &lt;span class="collapsable-code__title">First approach&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
@@ -57,8 +57,8 @@ Let&amp;rsquo;s say we have a shared library &lt;code>libcpp.so&lt;/code> where 
 
 
  &lt;div class="collapsable-code">
- &lt;input id="139728546" type="checkbox" />
- &lt;label for="139728546">
+ &lt;input id="817563429" type="checkbox" />
+ &lt;label for="817563429">
  &lt;span class="collapsable-code__language">cpp&lt;/span>
  
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
@@ -78,8 +78,8 @@ double* get_shared_memory(std::size_t num) {
 
 
  &lt;div class="collapsable-code">
- &lt;input id="324689571" type="checkbox" />
- &lt;label for="324689571">
+ &lt;input id="524369871" type="checkbox" />
+ &lt;label for="524369871">
  &lt;span class="collapsable-code__language">yaml&lt;/span>
  &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>

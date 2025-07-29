@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on OpenCore Blog</title><link>https://blog.opencore.ch/tags/python/</link><description>Recent content in Python on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>&lt;p>Although most of the examples and Boost&amp;rsquo;s documentation uses &lt;code>bjam&lt;/code>, you can also use CMake for your Boost.Python projects. A minimal &lt;code>CMakeLists.txt&lt;/code> to compile your Python library is provided below.&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on Roman's Random Thoughts</title><link>https://blog.opencore.ch/tags/python/</link><description>Recent content in Python on Roman's Random Thoughts</description><generator>Hugo</generator><language>en</language><lastBuildDate>Thu, 13 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Boost.Python: A minimal CMake Config</title><link>https://blog.opencore.ch/posts/boost-python-cmake/</link><pubDate>Thu, 13 Jan 2022 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/boost-python-cmake/</guid><description>&lt;p>Although most of the examples and Boost&amp;rsquo;s documentation uses &lt;code>bjam&lt;/code>, you can also use CMake for your Boost.Python projects. A minimal &lt;code>CMakeLists.txt&lt;/code> to compile your Python library is provided below.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>cmake_minimum_required(VERSION 3.10)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>project(yourlib)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>set(CMAKE_CXX_STANDARD 17)
@@ -14,8 +14,8 @@ Let&amp;rsquo;s say we have a shared library &lt;code>libcpp.so&lt;/code> where 
 
 
  &lt;div class="collapsable-code">
- &lt;input id="139728546" type="checkbox" />
- &lt;label for="139728546">
+ &lt;input id="817563429" type="checkbox" />
+ &lt;label for="817563429">
  &lt;span class="collapsable-code__language">cpp&lt;/span>
  
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>

@@ -1,10 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on OpenCore Blog</title><link>https://blog.opencore.ch/tags/devops/</link><description>Recent content in Devops on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>&lt;p>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, &lt;code>/sys/fs/cgroup&lt;/code>, &lt;code>/proc&lt;/code>, and &lt;code>/var/run/docker.sock&lt;/code> inside the container to do so. An example compose file for the sidecar looks like this:&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Roman's Random Thoughts</title><link>https://blog.opencore.ch/tags/devops/</link><description>Recent content in Devops on Roman's Random Thoughts</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sat, 25 Dec 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Setting up Metricbeat on a Docker Swarm Cluster</title><link>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</link><pubDate>Sat, 25 Dec 2021 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/metricbeat-docker-swarm-setup/</guid><description>&lt;p>To monitor your Docker Swarm hosts (and containers) with Metricbeat, you can set up a global sidecar service. You need to mount the host&amp;rsquo;s filesystem, &lt;code>/sys/fs/cgroup&lt;/code>, &lt;code>/proc&lt;/code>, and &lt;code>/var/run/docker.sock&lt;/code> inside the container to do so. An example compose file for the sidecar looks like this:&lt;/p>
 
 
 
  &lt;div class="collapsable-code">
- &lt;input id="324689571" type="checkbox" />
- &lt;label for="324689571">
+ &lt;input id="524369871" type="checkbox" />
+ &lt;label for="524369871">
  &lt;span class="collapsable-code__language">yaml&lt;/span>
  &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>

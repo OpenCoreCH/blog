@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on OpenCore Blog</title><link>https://blog.opencore.ch/tags/solidity/</link><description>Recent content in Solidity on OpenCore Blog</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>&lt;p>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Solidity on Roman's Random Thoughts</title><link>https://blog.opencore.ch/tags/solidity/</link><description>Recent content in Solidity on Roman's Random Thoughts</description><generator>Hugo</generator><language>en</language><lastBuildDate>Fri, 24 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.opencore.ch/tags/solidity/index.xml" rel="self" type="application/rss+xml"/><item><title>Splitting a string into multiple lines in Solidity: How hard can it be?</title><link>https://blog.opencore.ch/posts/solidity-line-split/</link><pubDate>Fri, 24 Feb 2023 00:00:00 +0000</pubDate><guid>https://blog.opencore.ch/posts/solidity-line-split/</guid><description>&lt;p>For the on-chain SVG generation of an NFT, I recently needed to split an (arbitrary) string into multiple lines. Each line should contain 40 characters. Pretty easy, right?&lt;/p>
 &lt;p>Let&amp;rsquo;s assume that we use an external function which takes a &lt;code>string&lt;/code> and returns a &lt;code>string[]&lt;/code> array containing the individual lines. A straight-forward implementation looks like this:&lt;/p>
 
 
 
  &lt;div class="collapsable-code">
- &lt;input id="289135674" type="checkbox" />
- &lt;label for="289135674">
+ &lt;input id="258734169" type="checkbox" />
+ &lt;label for="258734169">
  &lt;span class="collapsable-code__language">solidity&lt;/span>
  &lt;span class="collapsable-code__title">First approach&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
