@@ -2,7 +2,6 @@
 title = "Using SavaPage as a Frontend for uniFLOW"
 date = "2022-01-12"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["sre"]
 keywords = ["canon", "uniflow", "print", "savapage", "byod", "printportal"]

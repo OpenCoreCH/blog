@@ -2,7 +2,6 @@
 title = "Boost.Python: A minimal CMake Config"
 date = "2022-01-13"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["cpp", "python"]
 keywords = ["boost", "python", "cpp"]

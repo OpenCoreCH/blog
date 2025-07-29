@@ -2,7 +2,6 @@
 title = "Unicode Normalization Forms: When ö != ö"
 date = "2021-06-01"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["sre"]
 keywords = ["nextcloud", "unicode"]

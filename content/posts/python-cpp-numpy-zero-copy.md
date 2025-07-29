@@ -2,7 +2,6 @@
 title = "Exposing C/C++ Data as a Python NumPy Array"
 date = "2021-12-26"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["cpp", "python"]
 keywords = ["numpy", "np"]

@@ -2,7 +2,6 @@
 title = "Setting up Metricbeat on a Docker Swarm Cluster"
 date = "2021-12-25"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["devops"]
 keywords = ["docker", "docker-swarm", "elastic", "metricbeat"]

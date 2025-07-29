@@ -2,7 +2,6 @@
 title = "How to perform zero-copy S3 uploads with the AWS C++ SDK"
 date = "2021-12-11"
 author = "Roman Böhringer"
-authorTwitter = "romanboehr"
 cover = ""
 tags = ["cpp"]
 keywords = ["aws", "s3"]
