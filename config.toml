@@ -1,4 +1,4 @@
-title = 'Roman's Random Thoughts'
+title = "Roman's Random Thoughts"
 baseurl = "https://blog.opencore.ch"
 languageCode = "en-us"
 theme = "terminal"
