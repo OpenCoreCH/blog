@@ -1,4 +1,4 @@
-title = 'OpenCore Blog'
+title = 'Roman's Random Thoughts'
 baseurl = "https://blog.opencore.ch"
 languageCode = "en-us"
 theme = "terminal"
@@ -47,7 +47,7 @@ ignoreLogs = ['warning-goldmark-raw-html']
 [languages]
   [languages.en.params]
     languageName = "English"
-    title = "OpenCore Blog"
+    title = "Roman's Random Thoughts"
     subtitle = ""
     owner = "Roman Böhringer"
     keywords = ""
