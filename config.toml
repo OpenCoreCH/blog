@@ -3,6 +3,7 @@ baseurl = "https://blog.opencore.ch"
 languageCode = "en-us"
 theme = "terminal"
 paginate = 5
+ignoreLogs = ['warning-goldmark-raw-html']
 
 [params]
   # dir name of your main content (default is `content/posts`).
