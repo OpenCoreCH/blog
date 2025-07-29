@@ -7,8 +7,8 @@
 
 
  &lt;div class="collapsable-code">
- &lt;input id="698374125" type="checkbox" />
- &lt;label for="698374125">
+ &lt;input id="946857123" type="checkbox" />
+ &lt;label for="946857123">
  &lt;span class="collapsable-code__language">solidity&lt;/span>
  &lt;span class="collapsable-code__title">First approach&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
@@ -57,8 +57,8 @@ Let&amp;rsquo;s say we have a shared library &lt;code>libcpp.so&lt;/code> where 
 
 
  &lt;div class="collapsable-code">
- &lt;input id="459236817" type="checkbox" />
- &lt;label for="459236817">
+ &lt;input id="459781326" type="checkbox" />
+ &lt;label for="459781326">
  &lt;span class="collapsable-code__language">cpp&lt;/span>
  
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
@@ -78,8 +78,8 @@ double* get_shared_memory(std::size_t num) {
 
 
  &lt;div class="collapsable-code">
- &lt;input id="397628451" type="checkbox" />
- &lt;label for="397628451">
+ &lt;input id="514768239" type="checkbox" />
+ &lt;label for="514768239">
  &lt;span class="collapsable-code__language">yaml&lt;/span>
  &lt;span class="collapsable-code__title">docker-stack.yml&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>

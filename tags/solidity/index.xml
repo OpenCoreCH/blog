@@ -4,8 +4,8 @@
 
 
  &lt;div class="collapsable-code">
- &lt;input id="698374125" type="checkbox" />
- &lt;label for="698374125">
+ &lt;input id="946857123" type="checkbox" />
+ &lt;label for="946857123">
  &lt;span class="collapsable-code__language">solidity&lt;/span>
  &lt;span class="collapsable-code__title">First approach&lt;/span>
  &lt;span class="collapsable-code__toggle" data-label-expand="△" data-label-collapse="▽">&lt;/span>
